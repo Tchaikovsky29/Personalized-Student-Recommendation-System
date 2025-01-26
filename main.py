@@ -23,6 +23,7 @@ def show_visualizations():
     
 def show_details(strengths, weaknesses):
     # Display strengths
+    strengths = strengths['strengths']
     st.header("Strengths")
     st.markdown(f"{strengths['description']}")
     st.write("**Strong Topics:**")
@@ -31,6 +32,7 @@ def show_details(strengths, weaknesses):
 
     # Display weaknesses
     st.header("Weaknesses")
+    weaknesses = weaknesses['weaknesses']
     st.markdown(f"{weaknesses['description']}")
     st.write("**Weak Topics:**")
     for topic in weaknesses['topics']:

@@ -1,0 +1,31 @@
+stages:
+  data_ingestion:
+    cmd: python -m src.Data_Ingestion
+    deps:
+    - src/Data_Ingestion.py
+    - log.py
+    outs:
+      - data/raw
+  S_W:
+    cmd: python -m src.S_W
+    deps:
+    - data/raw
+    - src/S_W.py
+    - prompt.py
+    - log.py
+    outs:
+    - data/interim
+  Visualizations:
+    cmd: python -m src.Visualizations
+    deps:
+    - data/raw
+    - src/Visualizations.py
+    - log.py
+    outs:
+    - Visualizations
+  Streamlit:
+    cmd: streamlit run main.py 
+    deps:
+    - data/interim
+    - visualizations
+    - prompt.py

@@ -1,0 +1,84 @@
+schema: '2.0'
+stages:
+  data_ingestion:
+    cmd: python -m src.Data_Ingestion
+    deps:
+    - path: log.py
+      hash: md5
+      md5: 33d9ba2369c9445095a7f4f21b45b615
+      size: 858
+    - path: src/Data_Ingestion.py
+      hash: md5
+      md5: 45105a2cd15d5ac0de50d55d0ce7dd23
+      size: 1815
+    outs:
+    - path: data/raw
+      hash: md5
+      md5: 28378212d377f784e932e9cecdfb4d4a.dir
+      size: 577060
+      nfiles: 3
+  S_W:
+    cmd: python -m src.S_W
+    deps:
+    - path: data/raw
+      hash: md5
+      md5: 28378212d377f784e932e9cecdfb4d4a.dir
+      size: 577060
+      nfiles: 3
+    - path: log.py
+      hash: md5
+      md5: 33d9ba2369c9445095a7f4f21b45b615
+      size: 858
+    - path: prompt.py
+      hash: md5
+      md5: a9d3af5a3a7b6e270c67c8c361b2aaef
+      size: 1182
+    - path: src/S_W.py
+      hash: md5
+      md5: 911705df5ae824800a774e02da24b6ea
+      size: 3113
+    outs:
+    - path: data/interim
+      hash: md5
+      md5: 3fd1a900cd576fb788c4feb15f47b829.dir
+      size: 1119
+      nfiles: 2
+  Visualizations:
+    cmd: python -m src.Visualizations
+    deps:
+    - path: data/raw
+      hash: md5
+      md5: 28378212d377f784e932e9cecdfb4d4a.dir
+      size: 577060
+      nfiles: 3
+    - path: log.py
+      hash: md5
+      md5: 33d9ba2369c9445095a7f4f21b45b615
+      size: 858
+    - path: src/Visualizations.py
+      hash: md5
+      md5: 2b9724ffacc2b0371a7f6041330fe6c0
+      size: 2057
+    outs:
+    - path: Visualizations
+      hash: md5
+      md5: 77820a9520fccf9c375d31c8899e0fbe.dir
+      size: 30416
+      nfiles: 2
+  Streamlit:
+    cmd: streamlit run main.py
+    deps:
+    - path: data/interim
+      hash: md5
+      md5: 3fd1a900cd576fb788c4feb15f47b829.dir
+      size: 1119
+      nfiles: 2
+    - path: prompt.py
+      hash: md5
+      md5: a9d3af5a3a7b6e270c67c8c361b2aaef
+      size: 1182
+    - path: visualizations
+      hash: md5
+      md5: 77820a9520fccf9c375d31c8899e0fbe.dir
+      size: 30416
+      nfiles: 2
